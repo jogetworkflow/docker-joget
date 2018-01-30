@@ -34,12 +34,13 @@ cd /opt/joget/ \
 ; cp /opt/joget/apache-tomcat-*/webapps/jw.war /opt/jboss/wildfly/standalone/deployments/ \
 ; rm -rf /opt/joget/apache-tomcat-*
 
-# make script executable
+# copy script
 COPY run.sh /opt/joget/
-RUN chmod +x /opt/joget/run.sh
 
 # Chown all the files to the jboss user.
-RUN chown -R jboss /opt/joget
+RUN chmod +x /opt/joget/run.sh && \
+    chown -R jboss:0 /opt/joget && \
+    chmod -R g+rw /opt/joget
 
 # Switch back to jboss user
 USER jboss
