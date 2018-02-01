@@ -2,7 +2,7 @@
 FROM jogetworkflow/ubuntu-openjdk-mysql:16.04
 
 # set environment variables
-ENV JOGET_VERSION joget-professional-linux-6.0.1
+ENV JOGET_VERSION joget-professional-linux-6.0.2
 ENV JOGET_VIRTUALHOST false
 ENV ASPECTJ_VERSION aspectjweaver-1.6.12
 ENV WFLOW_HOME /opt/joget/wflow/
