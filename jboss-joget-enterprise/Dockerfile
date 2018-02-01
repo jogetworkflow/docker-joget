@@ -2,7 +2,7 @@
 FROM jboss/wildfly
 
 # set environment variables
-ENV JOGET_VERSION joget-enterprise-linux-6.0.1
+ENV JOGET_VERSION joget-enterprise-linux-6.0.2
 ENV WFLOW_HOME /opt/joget/wflow/
 ENV MYSQL_HOST localhost
 ENV MYSQL_PORT 3306
