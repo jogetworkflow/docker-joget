@@ -2,7 +2,7 @@
 
 if [[ "$MYSQL_HOST" == "localhost" ]]; then
     # start mysql
-    /etc/init.d/mysql start
+    sudo service mysql start
 
     # create database
     if [[ "$MYSQL_PASSWORD" == "" ]]; then
@@ -17,6 +17,5 @@ cd /opt/joget/
 ./apache-ant-1.7.1/bin/ant setup -Ddb.host=${MYSQL_HOST} -Ddb.port=${MYSQL_PORT} -Ddb.user=${MYSQL_USER} -Ddb.password=${MYSQL_PASSWORD} -Ddb.name=${MYSQL_DATABASE} -Dprofile.name=default
 
 # start tomcat
-cd /usr/local/tomcat
-catalina.sh run
+./apache-tomcat-8.5.23/bin/catalina.sh run
 
