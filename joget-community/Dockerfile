@@ -41,6 +41,9 @@ RUN \
 # Change to the app user.
 USER app
 
+# Expose the ports we're interested in
+EXPOSE 8080
+
 # Command to run
 ENTRYPOINT ["/opt/joget/run.sh"]
 CMD [""]
