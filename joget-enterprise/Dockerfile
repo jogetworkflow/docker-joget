@@ -1,19 +1,19 @@
 # jogetworkflow/joget-enterprise
-FROM jogetworkflow/ubuntu-openjdk-mysql:16.04
+FROM jogetworkflow/ubuntu-openjdk-mysql:18.04
 
 # set environment variables
-ENV JOGET_VERSION joget-enterprise-linux-6.0.2
+ENV JOGET_VERSION joget-enterprise-linux-7.0-SNAPSHOT
 ENV JOGET_VIRTUALHOST false
-ENV ASPECTJ_VERSION aspectjweaver-1.6.12
+ENV ASPECTJ_VERSION aspectjweaver-1.8.5
 ENV WFLOW_HOME /opt/joget/wflow/
 ENV MYSQL_HOST localhost
 ENV MYSQL_PORT 3306
 ENV MYSQL_DATABASE jwdb
 ENV MYSQL_USER root
-ENV MYSQL_PASSWORD ""
+ENV MYSQL_PASSWORD root
 
 # set java opts
-ENV JAVA_OPTS -Xmx512m -Dwflow.home=${WFLOW_HOME}
+ENV JAVA_OPTS -Xmx512m -Dwflow.home=${WFLOW_HOME} -javaagent:${WFLOW_HOME}/${ASPECTJ_VERSION}.jar -javaagent:${WFLOW_HOME}/glowroot/glowroot.jar
 
 # copy installer and scripts
 COPY ${JOGET_VERSION}.tar.gz /opt/joget/
