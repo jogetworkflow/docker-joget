@@ -1,2 +1,2 @@
 # docker-joget
-Docker images for Joget Workflow
+Docker images for Joget
