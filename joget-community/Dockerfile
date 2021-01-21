@@ -1,8 +1,8 @@
 # jogetworkflow/joget-community
-FROM jogetworkflow/ubuntu-openjdk-mysql:18.04
+FROM jogetworkflow/ubuntu-openjdk11-mysql:18.04
 
 # set environment variables
-ENV JOGET_VERSION joget-enterprise-linux-7.0-SNAPSHOT
+ENV JOGET_VERSION joget-linux-7.0-SNAPSHOT
 ENV JOGET_VIRTUALHOST false
 ENV ASPECTJ_VERSION aspectjweaver-1.8.5
 ENV TOMCAT_VERSION 8.5.58
@@ -14,7 +14,7 @@ ENV MYSQL_USER root
 ENV MYSQL_PASSWORD root
 
 # set java opts
-ENV JAVA_OPTS -Xmx512m -Dwflow.home=${WFLOW_HOME} -javaagent:${WFLOW_HOME}/${ASPECTJ_VERSION}.jar
+ENV JAVA_OPTS -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dwflow.home=${WFLOW_HOME} -javaagent:${WFLOW_HOME}/${ASPECTJ_VERSION}.jar
 
 # copy installer and scripts
 COPY ${JOGET_VERSION}.tar.gz /opt/joget/
