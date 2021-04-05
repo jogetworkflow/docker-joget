@@ -2,8 +2,7 @@
 FROM ubuntu:18.04
 
 # install openjdk
-RUN apt-get update && apt-get install -y sudo
-RUN apt-get install -y openjdk-11-jre
+RUN apt-get update && apt-get install -y sudo && apt-get install -y openjdk-11-jre && apt-get clean
 
 # install mysql
 RUN echo "mysql-server-5.7 mysql-server/root_password password root" | debconf-set-selections
