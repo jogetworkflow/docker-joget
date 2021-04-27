@@ -5,7 +5,6 @@ FROM jogetworkflow/ubuntu-openjdk11-mysql:18.04
 ENV JOGET_VERSION joget-linux-7.0-SNAPSHOT
 ENV JOGET_VIRTUALHOST false
 ENV ASPECTJ_VERSION aspectjweaver-1.8.5
-ENV TOMCAT_VERSION 8.5.58
 ENV WFLOW_HOME /opt/joget/wflow/
 ENV MYSQL_HOST localhost
 ENV MYSQL_PORT 3306
