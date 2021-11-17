@@ -1,14 +1,30 @@
 # jogetworkflow/ubuntu-openjdk-mysql
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
-# install openjdk
-RUN apt-get update && apt-get install -y sudo && apt-get install -y openjdk-11-jre && apt-get clean
+# install security updates
+RUN apt update && apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install
+
+# install java
+RUN apt install --no-install-recommends -y openjdk-11-jre-headless
 
 # install mysql
-RUN echo "mysql-server-5.7 mysql-server/root_password password root" | debconf-set-selections
-RUN echo "mysql-server-5.7 mysql-server/root_password_again password root" | debconf-set-selections
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server-5.7
-RUN find /var/lib/mysql -type f -exec touch {} \; && service mysql start
+# change mysql authentication plugin to mysql_native_password
+RUN apt install --no-install-recommends -y mysql-server-8.0 \
+  && service mysql start \
+  && mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'"
+
+# install sudo and vim
+RUN apt install --no-install-recommends -y sudo vim-tiny
+
+# cleanup
+RUN apt clean && rm -rf /var/lib/apt/lists/*
+
+# add user & group, and permissions necessary to permit running with a randomised UID
+RUN groupadd tomcat && useradd tomcat -g tomcat \
+    && echo "tomcat:tomcat" | chpasswd \
+    && usermod -aG 0 tomcat \
+    && usermod -aG sudo tomcat \
+    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+    && chmod 664 /etc/passwd
 
 CMD ["bash"]
-
