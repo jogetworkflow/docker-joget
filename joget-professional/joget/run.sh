@@ -17,5 +17,5 @@ cd /opt/joget/
 ./apache-ant-1.7.1/bin/ant setup -Ddb.host=${MYSQL_HOST} -Ddb.port=${MYSQL_PORT} -Ddb.user=${MYSQL_USER} -Ddb.password=${MYSQL_PASSWORD} -Ddb.name=${MYSQL_DATABASE} -Dprofile.name=default
 
 # start tomcat
-./apache-tomcat-*/bin/catalina.sh run
+./apache-tomcat/bin/catalina.sh run
 
