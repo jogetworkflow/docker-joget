@@ -2,7 +2,7 @@
 FROM eclipse-temurin:11 AS build
 
 # set build environment variables
-ENV JOGET_VERSION joget-enterprise-linux-7.0-SNAPSHOT
+ENV JOGET_VERSION joget-enterprise-linux-6.0.32
 
 # copy installers
 ADD ${JOGET_VERSION}.tar.gz /opt/
@@ -18,9 +18,7 @@ RUN mv /opt/${JOGET_VERSION} /opt/joget && \
     jar -xvf /opt/joget/apache-tomcat/webapps/jw.war && \
     rm /opt/joget/apache-tomcat/webapps/jw.war && \
     mkdir /opt/joget/lib && \
-    mv /opt/joget/wflow/aspectjweaver* /opt/joget/lib/ && \
-    mv /opt/joget/wflow/glowroot /opt/joget/lib/
-
+    mv /opt/joget/wflow/aspectjweaver* /opt/joget/lib/
 # copy custom files
 COPY joget /opt/joget/
 
@@ -44,7 +42,7 @@ ENV MYSQL_USER root
 ENV MYSQL_PASSWORD root
 
 # set java opts
-ENV JAVA_OPTS -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=70 -Dwflow.home=${WFLOW_HOME} -javaagent:${LIB_HOME}/${ASPECTJ_VERSION}.jar -javaagent:${LIB_HOME}/glowroot/glowroot.jar
+ENV JAVA_OPTS -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=70 -Dwflow.home=${WFLOW_HOME} -javaagent:${LIB_HOME}/${ASPECTJ_VERSION}.jar
 
 # copy joget directory
 COPY --from=build /opt/joget /opt/joget
