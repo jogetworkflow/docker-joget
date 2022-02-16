@@ -9,7 +9,7 @@ RUN apt install --no-install-recommends -y openjdk-11-jre-headless
 
 # install mysql
 # change mysql authentication plugin to mysql_native_password
-RUN apt install --no-install-recommends -y mysql-server-8.0 \
+RUN DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y mysql-server-8.0 \
   && service mysql start \
   && mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'"
 
