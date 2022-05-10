@@ -2,7 +2,7 @@
 FROM eclipse-temurin:11 AS build
 
 # set build environment variables
-ENV JOGET_VERSION joget-linux-7.0-SNAPSHOT
+ENV JOGET_VERSION joget-linux-8.0-SNAPSHOT
 
 # copy installers
 ADD ${JOGET_VERSION}.tar.gz /opt/
@@ -33,7 +33,7 @@ RUN groupadd tomcat && useradd tomcat -g tomcat \
 FROM jogetworkflow/ubuntu-openjdk11-mysql:20.04
 
 # set environment variables
-ENV ASPECTJ_VERSION aspectjweaver-1.8.5
+ENV ASPECTJ_VERSION aspectjweaver-1.9.7
 ENV LIB_HOME /opt/joget/lib
 ENV WFLOW_HOME /opt/joget/wflow
 ENV MYSQL_HOST localhost
