@@ -9,8 +9,10 @@ RUN apt install --no-install-recommends -y openjdk-11-jre-headless
 
 # install mysql
 # change mysql authentication plugin to mysql_native_password
+# added chmod 755 fix for mysql incorrect 0700 file permission bug blocking non-root user connection over the socket
 RUN DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y mysql-server-8.0 \
   && service mysql start \
+  && chmod 755 /var/run/mysqld \ 
   && mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'"
 
 # install sudo and vim
