@@ -33,7 +33,7 @@ RUN groupadd tomcat && useradd tomcat -g tomcat \
 FROM jogetworkflow/ubuntu-openjdk11-mysql:20.04
 
 # set environment variables
-ENV ASPECTJ_VERSION aspectjweaver-1.9.7
+ENV ASPECTJ_VERSION aspectjweaver-1.9.22
 ENV LIB_HOME /opt/joget/lib
 ENV WFLOW_HOME /opt/joget/wflow
 ENV MYSQL_HOST localhost
