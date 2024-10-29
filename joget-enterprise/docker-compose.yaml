@@ -1,0 +1,55 @@
+services:
+  init:
+    image: alpine
+    restart: no
+    entrypoint: |
+      /bin/sh -c "chmod -f -R g+w /opt/joget/wflow"
+    volumes:
+      - jogetdata:/opt/joget/wflow
+  joget:
+    container_name: jogetapp
+    image: ${JOGET_IMAGE:-jogetworkflow/joget-enterprise}:${JOGET_VERSION:-9.0-SNAPSHOT}
+    restart: unless-stopped
+    ports:
+      - ${JOGET_PORT:-8080}:8080
+      - ${GLOWROOT_PORT:-4000}:4000
+    environment:
+      - MYSQL_HOST=jogetdb
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=${JOGETDB_DATABASE:-jwdb}
+      - MYSQL_USER=${JOGETDB_USER:-joget}
+      - MYSQL_PASSWORD=${JOGETDB_PASSWORD:-joget}
+    volumes:
+      - jogetdata:/opt/joget/wflow
+    mac_address: ${MAC_ADDR:-02:42:ac:11:00:08}
+    networks:
+      joget-network:
+    depends_on:
+      jogetdb:
+        condition: service_healthy
+  jogetdb:
+    container_name: jogetdb
+    image: mysql:8.0
+    restart: unless-stopped
+    command: --slow-query-log=TRUE --long-query-time=2
+    environment:
+      - MYSQL_ROOT_PASSWORD=${JOGETDB_ROOT_PASS:-root}
+      - MYSQL_DATABASE=${JOGETDB_DATABASE:-jwdb}
+      - MYSQL_USER=${JOGETDB_USER:-joget}
+      - MYSQL_PASSWORD=${JOGETDB_PASSWORD:-joget}
+    volumes:
+      - "./limithostip.sql:/docker-entrypoint-initdb.d/1.sql"
+      - mysqldata:/var/lib/mysql
+    networks:
+      joget-network:
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 30s
+      retries: 10
+
+volumes:
+  jogetdata:
+  mysqldata:
+
+networks:
+  joget-network:
