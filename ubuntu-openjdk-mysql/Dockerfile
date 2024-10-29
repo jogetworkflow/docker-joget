@@ -1,11 +1,11 @@
 # jogetworkflow/ubuntu-openjdk-mysql
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 # install security updates
 RUN apt update && apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install
 
 # install java
-RUN apt install --no-install-recommends -y openjdk-11-jre-headless
+RUN apt install --no-install-recommends -y openjdk-21-jre-headless
 
 # install mysql
 # change mysql authentication plugin to mysql_native_password

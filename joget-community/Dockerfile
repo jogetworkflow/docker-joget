@@ -1,8 +1,8 @@
 # start build image
-FROM eclipse-temurin:11 AS build
+FROM eclipse-temurin:21 AS build
 
 # set build environment variables
-ENV JOGET_VERSION joget-linux-8.0-SNAPSHOT
+ENV JOGET_VERSION joget-linux-9.0-SNAPSHOT
 
 # copy installers
 ADD ${JOGET_VERSION}.tar.gz /opt/
@@ -30,7 +30,7 @@ RUN groupadd tomcat && useradd tomcat -g tomcat \
     && chmod +x /opt/joget/run.sh
 
 # start runtime image
-FROM jogetworkflow/ubuntu-openjdk11-mysql:20.04
+FROM jogetworkflow/ubuntu-openjdk21-mysql:24.04
 
 # set environment variables
 ENV ASPECTJ_VERSION aspectjweaver-1.9.22
@@ -43,7 +43,7 @@ ENV MYSQL_USER root
 ENV MYSQL_PASSWORD root
 
 # set java opts
-ENV JAVA_OPTS -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=70 -Dwflow.home=${WFLOW_HOME} -javaagent:${LIB_HOME}/${ASPECTJ_VERSION}.jar
+ENV JAVA_OPTS -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=70 -Dwflow.home=${WFLOW_HOME} --add-opens=java.base/java.nio=ALL-UNNAMED -javaagent:${LIB_HOME}/${ASPECTJ_VERSION}.jar
 
 # copy joget directory
 COPY --from=build /opt/joget /opt/joget
