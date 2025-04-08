@@ -30,7 +30,7 @@ RUN groupadd tomcat && useradd tomcat -g tomcat \
     && chmod +x /opt/joget/run.sh
 
 # start runtime image
-FROM eclipse-temurin:21
+FROM jogetworkflow/ubuntu-openjdk21-mysql:24.04
 
 # set environment variables
 ENV ASPECTJ_VERSION aspectjweaver-1.9.22
@@ -44,14 +44,6 @@ ENV MYSQL_PASSWORD root
 
 # set java opts
 ENV JAVA_OPTS -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=70 -Dwflow.home=${WFLOW_HOME} --add-opens=java.base/java.nio=ALL-UNNAMED -javaagent:${LIB_HOME}/${ASPECTJ_VERSION}.jar
-
-# add user & group, and permissions necessary to permit running with a randomised UID
-# install security updates, mysql-client and vim
-RUN groupadd tomcat && useradd tomcat -g tomcat \
-    && chmod 664 /etc/passwd \
-    && apt update && apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install \
-    && apt install --no-install-recommends -y mysql-client vim-tiny  \
-    && apt clean && rm -rf /var/lib/apt/lists/*
 
 # copy joget directory
 COPY --from=build /opt/joget /opt/joget
