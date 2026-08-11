@@ -10,10 +10,6 @@ ADD ${JOGET_VERSION}.tar.gz /opt/
 # unzip war, move files and delete unused files
 RUN mv /opt/${JOGET_VERSION} /opt/joget && \
     mv /opt/joget/apache-tomcat-* /opt/joget/apache-tomcat && \
-    rm -r /opt/joget/apache-tomcat/webapps/docs && \
-    rm -r /opt/joget/apache-tomcat/webapps/examples && \
-    rm -r /opt/joget/apache-tomcat/webapps/host-manager && \
-    rm -r /opt/joget/apache-tomcat/webapps/manager && \
     mkdir /opt/joget/apache-tomcat/webapps/jw && cd /opt/joget/apache-tomcat/webapps/jw && \
     jar -xvf /opt/joget/apache-tomcat/webapps/jw.war && \
     rm /opt/joget/apache-tomcat/webapps/jw.war && \
