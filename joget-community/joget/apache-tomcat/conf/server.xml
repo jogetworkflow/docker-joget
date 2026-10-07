@@ -68,9 +68,13 @@
     -->
     <Connector port="8080" protocol="HTTP/1.1"
                connectionTimeout="20000" maxThreads="2000"
+               maxPartCount="1000"
+               maxPartHeaderSize="10240"
                redirectPort="8443" />
     <Connector port="9090" protocol="HTTP/1.1"
                connectionTimeout="20000" maxThreads="2000"
+               maxPartCount="1000"
+               maxPartHeaderSize="10240"
                scheme="https"
                proxyPort="443"
                redirectPort="443" />
